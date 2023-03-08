@@ -25,6 +25,8 @@ import configReducer from './redux/configSlice';
 import MenuBuilder from './menu';
 import { isWindows, isWindows10, isMacOS, isLinux } from './shared/utils';
 import { settings, setDefaultSettings } from './components/shared/setDefaultSettings';
+import ElectronStore from 'electron-store';
+const windowStore = new ElectronStore();
 
 setDefaultSettings(false);
 
@@ -446,6 +448,12 @@ const createWindow = async () => {
     minHeight: 600,
     frame: settings.get('titleBarStyle') === 'native',
   });
+
+  mainWindow.setBounds(windowStore.get('bounds'))
+
+  mainWindow.on('close', () => {
+    windowStore.set('bounds', mainWindow.getBounds())
+  })
 
   if (settings.get('globalMediaHotkeys')) {
     globalShortcut.register('MediaStop', () => {
