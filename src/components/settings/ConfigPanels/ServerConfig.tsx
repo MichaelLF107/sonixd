@@ -84,7 +84,7 @@ const ServerConfig = ({ bordered }: any) => {
               settings.set('musicFolder.dashboard', e);
             }}
           >
-            {t('Dashboard')}
+            {t('Home')}
           </StyledCheckbox>
           <StyledCheckbox
             defaultChecked={folder.applied.starred}
