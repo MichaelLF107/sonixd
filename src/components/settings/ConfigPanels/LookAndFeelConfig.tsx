@@ -577,7 +577,7 @@ export const ThemeConfigPanel = ({ bordered }: any) => {
                     role: 'Default',
                   },
                   {
-                    label: t('Dashboard'),
+                    label: t('Home'),
                     value: '/',
                     role: 'Default',
                   },
@@ -692,7 +692,7 @@ export const ThemeConfigPanel = ({ bordered }: any) => {
               container={() => sidebarPickerContainerRef.current}
               data={[
                 {
-                  label: i18n.t('Dashboard'),
+                  label: i18n.t('Home'),
                   value: 'dashboard',
                 },
                 {
