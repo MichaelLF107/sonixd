@@ -258,12 +258,17 @@
     "yarn-deduplicate": "^3.1.0"
   },
   "dependencies": {
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/icons-material": "^5.11.11",
+    "@mui/material": "^5.11.12",
     "@reduxjs/toolkit": "^1.6.1",
     "array-move": "^3.0.1",
     "axios": "^0.21.1",
     "axios-retry": "^3.1.9",
     "chart.js": "^3.9.1",
     "discord-rpc": "^4.0.1",
+    "electron-config": "^2.0.0",
     "electron-debug": "^3.1.0",
     "electron-localshortcut": "^3.2.1",
     "electron-log": "^4.2.4",
@@ -299,7 +304,7 @@
     "react-window": "^1.8.6",
     "regenerator-runtime": "^0.13.5",
     "rsuite": "^4.10.2",
-    "sass": "^1.49.11",
+    "sass": "^1.58.3",
     "source-map-support": "^0.5.19",
     "styled-components": "^5"
   },

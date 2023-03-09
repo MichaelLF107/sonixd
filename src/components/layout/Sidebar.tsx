@@ -3,7 +3,7 @@ import useMeasure from 'react-use/lib/useMeasure';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { Sidenav, Nav, Icon } from 'rsuite';
+import { Sidenav, Icon } from 'rsuite';
 import _ from 'lodash';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { Server } from '../../types';
@@ -12,7 +12,6 @@ import {
   PlaylistDivider,
   SidebarCoverArtContainer,
   SidebarDragContainer,
-  SidebarNavItem,
 } from './styled';
 import { StyledButton } from '../shared/styled';
 import { InfoModal } from '../modal/Modal';
@@ -20,6 +19,17 @@ import placeholderImg from '../../img/placeholder.png';
 import SidebarPlaylists from './SidebarPlaylists';
 import { setSidebar } from '../../redux/configSlice';
 import { settings } from '../shared/setDefaultSettings';
+import AssessmentIcon from '@mui/icons-material/Assessment';
+import HeadphonesIcon from '@mui/icons-material/Headphones';
+import QueueMusicIcon from '@mui/icons-material/QueueMusic';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
+import AlbumIcon from '@mui/icons-material/Album';
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
+import PianoIcon from '@mui/icons-material/Piano';
+import FolderCopyIcon from '@mui/icons-material/FolderCopy';
+import SettingsIcon from '@mui/icons-material/Settings';
+import SideNavItem from './SideNavItem';
 
 const Sidebar = ({
   expand,
@@ -99,7 +109,7 @@ const Sidebar = ({
         $titleBar={titleBar} // transient prop to determine position
         onClick={rest.onClick}
       >
-        <Sidenav style={{ height: '100%' }} expanded={expand} appearance="default">
+        <Sidenav style={{ height: '100%' }} expanded={true} appearance="default">
           {expand && config.lookAndFeel.sidebar.coverArt && (
             <SidebarCoverArtContainer height={`${width}px`}>
               <LazyLoadImage
@@ -117,6 +127,7 @@ const Sidebar = ({
                   dispatch(setSidebar({ coverArt: false }));
                   settings.set('sidebar.coverArt', false);
                 }}
+                $circle
               >
                 <Icon icon="down" />
               </StyledButton>
@@ -141,181 +152,54 @@ const Sidebar = ({
                   }}
                 />
               )}
-
-              <Nav>
-                <div ref={mainNavRef}>
-                  <SidebarNavItem
-                    tabIndex={0}
-                    eventKey="discover"
-                    icon={<Icon icon="dashboard" />}
-                    onSelect={handleSidebarSelect}
-                    disabled={disableSidebar}
-                    onKeyDown={(e: any) => {
-                      if (e.key === ' ' || e.key === 'Enter') {
-                        history.push('/');
-                      }
-                    }}
-                    $show={config.lookAndFeel.sidebar.selected.includes('dashboard')}
-                  >
+                <div ref={mainNavRef} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                  <SideNavItem onClick={() => history.push('/')}>
+                    <AssessmentIcon fontSize='inherit' />
                     {t('Dashboard')}
-                  </SidebarNavItem>
-                  <SidebarNavItem
-                    tabIndex={0}
-                    eventKey="nowplaying"
-                    icon={<Icon icon="headphones" />}
-                    onSelect={handleSidebarSelect}
-                    disabled={disableSidebar}
-                    onKeyDown={(e: any) => {
-                      if (e.key === ' ' || e.key === 'Enter') {
-                        history.push('/nowplaying');
-                      }
-                    }}
-                    $show={config.lookAndFeel.sidebar.selected.includes('nowplaying')}
-                  >
+                  </SideNavItem>
+                  <SideNavItem onClick={() => history.push('/nowplaying')}>
+                    <HeadphonesIcon fontSize='inherit' />
                     {t('Now Playing')}
-                  </SidebarNavItem>
-                  <SidebarNavItem
-                    tabIndex={0}
-                    eventKey="playlists"
-                    icon={<Icon icon="list-ul" />}
-                    onSelect={handleSidebarSelect}
-                    disabled={disableSidebar}
-                    onKeyDown={(e: any) => {
-                      if (e.key === ' ' || e.key === 'Enter') {
-                        history.push('/playlist');
-                      }
-                    }}
-                    $show={config.lookAndFeel.sidebar.selected.includes('playlists')}
-                  >
+                  </SideNavItem>
+                  <SideNavItem onClick={() => history.push('/playlist')}>
+                    <QueueMusicIcon fontSize='inherit' />
                     {t('Playlists')}
-                  </SidebarNavItem>
-                  <SidebarNavItem
-                    tabIndex={0}
-                    eventKey="starred"
-                    icon={<Icon icon="heart" />}
-                    onSelect={handleSidebarSelect}
-                    disabled={disableSidebar}
-                    onKeyDown={(e: any) => {
-                      if (e.key === ' ' || e.key === 'Enter') {
-                        history.push('/starred');
-                      }
-                    }}
-                    $show={config.lookAndFeel.sidebar.selected.includes('favorites')}
-                  >
+                  </SideNavItem>
+                  <SideNavItem onClick={() => history.push('/starred')}>
+                    <FavoriteIcon fontSize='inherit' />
                     {t('Favorites')}
-                  </SidebarNavItem>
+                  </SideNavItem>
                   {config.serverType === Server.Jellyfin && (
-                    <SidebarNavItem
-                      tabIndex={0}
-                      eventKey="music"
-                      icon={<Icon icon="music" />}
-                      onSelect={handleSidebarSelect}
-                      disabled={disableSidebar}
-                      onKeyDown={(e: any) => {
-                        if (e.key === ' ' || e.key === 'Enter') {
-                          history.push('/library/music');
-                        }
-                      }}
-                      $show={config.lookAndFeel.sidebar.selected.includes('songs')}
-                    >
-                      Songs
-                    </SidebarNavItem>
+                    <SideNavItem onClick={() => history.push('/library/music')}>
+                      <LibraryMusicIcon fontSize='inherit' />
+                      {t('Songs')}
+                    </SideNavItem>
                   )}
-                  <SidebarNavItem
-                    tabIndex={0}
-                    eventKey="albums"
-                    icon={<Icon icon="book2" />}
-                    onSelect={handleSidebarSelect}
-                    disabled={disableSidebar}
-                    onKeyDown={(e: any) => {
-                      if (e.key === ' ' || e.key === 'Enter') {
-                        history.push('/library/album');
-                      }
-                    }}
-                    $show={config.lookAndFeel.sidebar.selected.includes('albums')}
-                  >
+                  <SideNavItem onClick={() => history.push('/library/album')}>
+                    <AlbumIcon fontSize='inherit' />
                     {t('Albums')}
-                  </SidebarNavItem>
-                  <SidebarNavItem
-                    tabIndex={0}
-                    eventKey="artists"
-                    icon={<Icon icon="people-group" />}
-                    onSelect={handleSidebarSelect}
-                    disabled={disableSidebar}
-                    onKeyDown={(e: any) => {
-                      if (e.key === ' ' || e.key === 'Enter') {
-                        history.push('/library/artist');
-                      }
-                    }}
-                    $show={config.lookAndFeel.sidebar.selected.includes('artists')}
-                  >
+                  </SideNavItem>
+                  <SideNavItem onClick={() => history.push('/library/artist')}>
+                    <AccountBoxIcon fontSize='inherit' />
                     {t('Artists')}
-                  </SidebarNavItem>
-                  <SidebarNavItem
-                    tabIndex={0}
-                    eventKey="genres"
-                    icon={<Icon icon="globe2" />}
-                    onSelect={handleSidebarSelect}
-                    disabled={disableSidebar}
-                    onKeyDown={(e: any) => {
-                      if (e.key === ' ' || e.key === 'Enter') {
-                        history.push('/library/genre');
-                      }
-                    }}
-                    $show={config.lookAndFeel.sidebar.selected.includes('genres')}
-                  >
+                  </SideNavItem>
+                  <SideNavItem onClick={() => history.push('/library/genre')}>
+                    <PianoIcon fontSize='inherit' />
                     {t('Genres')}
-                  </SidebarNavItem>
+                  </SideNavItem>
                   {useAppSelector((state) => state.config).serverType !== 'funkwhale' && (
                     <>
-                      <SidebarNavItem
-                        tabIndex={0}
-                        eventKey="folders"
-                        icon={<Icon icon="folder-open" />}
-                        onSelect={handleSidebarSelect}
-                        disabled={disableSidebar}
-                        onKeyDown={(e: any) => {
-                          if (e.key === ' ' || e.key === 'Enter') {
-                            history.push('/library/folder');
-                          }
-                        }}
-                        $show={config.lookAndFeel.sidebar.selected.includes('folders')}
-                      >
+                      <SideNavItem onClick={() => history.push('/library/folder')}>
+                        <FolderCopyIcon fontSize='inherit' />
                         {t('Folders')}
-                      </SidebarNavItem>
+                      </SideNavItem>
                     </>
                   )}
-                  <SidebarNavItem
-                    tabIndex={0}
-                    eventKey="config"
-                    icon={<Icon icon="gear-circle" />}
-                    onSelect={handleSidebarSelect}
-                    disabled={disableSidebar}
-                    onKeyDown={(e: any) => {
-                      if (e.key === ' ' || e.key === 'Enter') {
-                        history.push('/config');
-                      }
-                    }}
-                    $show={config.lookAndFeel.sidebar.selected.includes('config')}
-                  >
+                  <SideNavItem onClick={() => history.push('/config')}>
+                    <SettingsIcon fontSize='inherit' />
                     {t('Config')}
-                  </SidebarNavItem>
-                  <SidebarNavItem
-                    tabIndex={0}
-                    icon={<Icon icon={expand ? 'arrow-left' : 'arrow-right'} />}
-                    onSelect={handleToggle}
-                    disabled={disableSidebar}
-                    onKeyDown={(e: any) => {
-                      if (e.key === ' ' || e.key === 'Enter') {
-                        handleToggle();
-                      }
-                    }}
-                    $show={config.lookAndFeel.sidebar.selected.includes('collapse')}
-                  >
-                    {expand ? t('Collapse') : t('Expand')}
-                  </SidebarNavItem>
+                  </SideNavItem>
                 </div>
-              </Nav>
               {expand &&
                 !disableSidebar &&
                 config.lookAndFeel.sidebar.selected.includes('playlistList') && (
