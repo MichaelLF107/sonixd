@@ -145,6 +145,7 @@
   "Grid View": "ජාල දර්ශනය",
   "Highlight On Hover": "සැරිසරන්න මත උද්දීපනය කරන්න",
   "Highlights the list view row when hovering it with the mouse.": "මූසිකය සමඟ සැරිසරන විට ලැයිස්තු දර්ශන පේළිය උද්දීපනය කරයි.",
+  "Home": "මුල්",
   "How many tracks?": "ධාවන පථ කීයක් ද?",
   "If local, scrobbles the currently playing song to local .txt files. If web, scrobbles the currently playing song to Tuna plugin's webserver.": "දේශීය නම්, දැනට වාදනය වන ගීතය දේශීය .txt ගොනු වෙත අනුචලනය කරන්න. වෙබ් නම්, දැනට වාදනය වන ගීතය Tuna ප්ලගිනයේ වෙබ් සේවාදායකයට ස්ක්‍රෝබල් කරයි.",
   "If your audio files are not playing properly or are not in a supported web streaming format, you will need to enable this (requires app restart).": "ඔබගේ ශ්‍රව්‍ය ගොනු නිසි ලෙස වාදනය නොවන්නේ නම් හෝ සහය දක්වන වෙබ් ප්‍රවාහ ආකෘතියක නොමැති නම්, ඔබට මෙය සබල කිරීමට අවශ්‍ය වනු ඇත (යෙදුම නැවත ආරම්භ කිරීම අවශ්‍ය වේ).",

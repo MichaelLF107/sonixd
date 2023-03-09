@@ -145,6 +145,7 @@
   "Grid View": "Kılavuz Görünümü",
   "Highlight On Hover": "Üstüne Gelince Vurgula",
   "Highlights the list view row when hovering it with the mouse.": "Liste görünümündeki satırların üzerinde fareyi gezdiriken vurgula.",
+  "Home": "Ana Sayfa",
   "How many tracks?": "Kaç parça?",
   "If local, scrobbles the currently playing song to local .txt files. If web, scrobbles the currently playing song to Tuna plugin's webserver.": "Yerel ise bilgisayarınızdaki .txt dosylarını kullanır. Web ise, Tuna eklenti sunucusunu kullanır.",
   "If your audio files are not playing properly or are not in a supported web streaming format, you will need to enable this (requires app restart).": "Ses dosyalarınız düzgün çalmıyor yada streaminge uygun bir formatta değilse bunu aktive edin (uygulamayı yeniden başlatmak gerekir).",

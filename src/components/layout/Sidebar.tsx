@@ -19,7 +19,7 @@ import placeholderImg from '../../img/placeholder.png';
 import SidebarPlaylists from './SidebarPlaylists';
 import { setSidebar } from '../../redux/configSlice';
 import { settings } from '../shared/setDefaultSettings';
-import AssessmentIcon from '@mui/icons-material/Assessment';
+import HomeIcon from '@mui/icons-material/Home';
 import HeadphonesIcon from '@mui/icons-material/Headphones';
 import QueueMusicIcon from '@mui/icons-material/QueueMusic';
 import FavoriteIcon from '@mui/icons-material/Favorite';
@@ -154,8 +154,8 @@ const Sidebar = ({
               )}
                 <div ref={mainNavRef} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                   <SideNavItem onClick={() => history.push('/')}>
-                    <AssessmentIcon fontSize='inherit' />
-                    {t('Dashboard')}
+                    <HomeIcon fontSize='inherit' />
+                    {t('Home')}
                   </SideNavItem>
                   <SideNavItem onClick={() => history.push('/nowplaying')}>
                     <HeadphonesIcon fontSize='inherit' />

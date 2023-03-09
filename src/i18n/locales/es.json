@@ -145,6 +145,7 @@
   "Grid View": "Vista de Cuadrícula",
   "Highlight On Hover": "Resaltar con el Cursor",
   "Highlights the list view row when hovering it with the mouse.": "Resalta las filas cuando el cursor se coloca encima en la vista de lista.",
+  "Home": "Inicio",
   "How many tracks?": "¿Cuántas pistas?",
   "If local, scrobbles the currently playing song to local .txt files. If web, scrobbles the currently playing song to Tuna plugin's webserver.": "Si esta opción es \"local\", los datos de la canción en reproducción serán guardados en un archivo de texto. Si esta opción es \"web\", los datos de la canción en reproducción serán enviados al plugin del servidor web de Tuna.",
   "If your audio files are not playing properly or are not in a supported web streaming format, you will need to enable this (requires app restart).": "Habilite esta opción si los archivos de audio no se reproducen correctamente o no están en un formato adecuado para reproducción web.",
