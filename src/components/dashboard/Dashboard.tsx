@@ -105,7 +105,7 @@ const Dashboard = () => {
   }
 
   return (
-    <GenericPage header={<GenericPageHeader title={t('Dashboard')} />} hideDivider>
+    <GenericPage header={<GenericPageHeader title={t('Home')} />} hideDivider>
       {newestAlbums && recentAlbums && randomAlbums && (
         <>
           <ScrollingMenu
