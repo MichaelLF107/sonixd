@@ -30,6 +30,7 @@ import CustomTooltip from '../shared/CustomTooltip';
 import { CoverArtWrapper, CustomImageGrid, CustomImageGridWrapper } from '../layout/styled';
 import usePlayQueueHandler from '../../hooks/usePlayQueueHandler';
 import { Item, Play } from '../../types';
+import AlbumIcon from '@mui/icons-material/Album';
 
 const Card = ({
   onClick,
@@ -128,18 +129,9 @@ const Card = ({
                 opacity={0.4}
                 onClick={handleClick}
               >
-                <Icon
-                  icon={
-                    playClick.type === 'album'
-                      ? 'book2'
-                      : playClick.type === 'artist'
-                      ? 'user'
-                      : playClick.type === 'playlist'
-                      ? 'list-ul'
-                      : 'music'
-                  }
-                  size="4x"
-                />
+                <div style={{fontSize: '120px', display: 'flex', alignItems: 'center'}}>
+                <AlbumIcon fontSize='inherit' />
+                </div>
               </CardImgWrapper>
             ) : (
               <CardImgWrapper size={size} onClick={handleClick}>
