@@ -30,7 +30,7 @@ import CustomTooltip from '../shared/CustomTooltip';
 import { CoverArtWrapper, CustomImageGrid, CustomImageGridWrapper } from '../layout/styled';
 import usePlayQueueHandler from '../../hooks/usePlayQueueHandler';
 import { Item, Play } from '../../types';
-import AlbumIcon from '@mui/icons-material/Album';
+import placeholderImg from '../../img/placeholder.png';
 
 const Card = ({
   onClick,
@@ -129,9 +129,12 @@ const Card = ({
                 opacity={0.4}
                 onClick={handleClick}
               >
-                <div style={{fontSize: '120px', display: 'flex', alignItems: 'center'}}>
-                <AlbumIcon fontSize='inherit' />
-                </div>
+                <CardImg
+                  id="placeholder-img"
+                  src={placeholderImg}
+                  alt="img"
+                  cardsize={size}
+                />
               </CardImgWrapper>
             ) : (
               <CardImgWrapper size={size} onClick={handleClick}>
