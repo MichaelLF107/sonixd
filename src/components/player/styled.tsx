@@ -25,6 +25,46 @@ export const PlayerColumn = styled.div<{
     props.left ? 'flex-start' : props.center ? 'center' : props.right ? 'flex-end' : 'center'};
 `;
 
+export const IconDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  color: ${(props) => props.theme.colors.layout.playerBar.color};
+  padding: 0 10px;
+  cursor: pointer;
+  &:hover {
+    color: ${(props) => props.theme.colors.layout.playerBar.colorHover};
+  }
+`;
+
+export const BigIconDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: ${(props) => props.theme.colors.layout.playerBar.color};
+  padding: 0 10px;
+  cursor: pointer;
+  &:hover {
+    color: ${(props) => props.theme.colors.layout.playerBar.colorHover};
+  }
+`;
+
+export const SmallIconDiv = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: ${(props) => props.theme.colors.layout.playerBar.color};
+  padding: 0 10px;
+  cursor: pointer;
+  &:hover {
+    color: ${(props) => props.theme.colors.layout.playerBar.colorHover};
+  }
+`;
+
+
 export const PlayerControlIcon = styled(Icon)`
   cursor: pointer;
   font-size: medium;

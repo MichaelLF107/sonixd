@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useMemo } from 'react';
+import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
 import axios from 'axios';
 import { useQueryClient } from 'react-query';
 import { FlexboxGrid, Grid, Row, Col, Whisper, Icon } from 'rsuite';
@@ -10,9 +10,10 @@ import { ipcRenderer } from 'electron';
 import {
   PlayerContainer,
   PlayerColumn,
-  PlayerControlIcon,
+  IconDiv,
+  BigIconDiv,
+  SmallIconDiv,
   DurationSpan,
-  VolumeIcon,
   LinkButton,
   CoverArtContainer,
 } from './styled';
@@ -37,6 +38,22 @@ import { apiController } from '../../api/controller';
 import Slider from '../slider/Slider';
 import useDiscordRpc from '../../hooks/useDiscordRpc';
 import { settings } from '../shared/setDefaultSettings';
+import PlayCircleIcon from '@mui/icons-material/PlayCircle';
+import PauseCircleIcon from '@mui/icons-material/PauseCircle';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
+import StopCircleIcon from '@mui/icons-material/StopCircle';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShuffleIcon from '@mui/icons-material/Shuffle';
+import ShuffleOnIcon from '@mui/icons-material/ShuffleOn';
+import RepeatIcon from '@mui/icons-material/Repeat';
+import RepeatOnIcon from '@mui/icons-material/RepeatOn';
+import RepeatOneOnIcon from '@mui/icons-material/RepeatOneOn';
+import ViewListIcon from '@mui/icons-material/ViewList';
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+import VolumeOffIcon from '@mui/icons-material/VolumeOff';
 
 const PlayerBar = () => {
   const { t } = useTranslation();
@@ -178,8 +195,6 @@ const PlayerBar = () => {
     handleNextTrack,
     handlePrevTrack,
     handlePlayPause,
-    handleSeekBackward,
-    handleSeekForward,
     handleSeekSlider,
     handleVolumeSlider,
     handleVolumeWheel,
@@ -237,13 +252,21 @@ const PlayerBar = () => {
   const { handleFavorite } = useFavorite();
   const { handleRating } = useRating();
 
+  const accentColor = localStorage.getItem('accentColor') || '#1DB954';
+
+  const handleClickBar = useCallback((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (event.target === event.currentTarget) {
+      history.push('/nowplaying');
+    }
+  }, []);
+
   return (
     <Player ref={playersRef} currentEntryList={currentEntryList} muted={muted}>
       {playQueue.showDebugWindow && <DebugWindow currentEntryList={currentEntryList} />}
       <PlayerContainer aria-label="playback controls" role="complementary">
         <FlexboxGrid align="middle" style={{ height: '100%' }}>
           <FlexboxGrid.Item colspan={6} style={{ textAlign: 'left', paddingLeft: '10px' }}>
-            <PlayerColumn left height="80px">
+            <PlayerColumn left height="80px" onClick={handleClickBar}>
               <Grid style={{ width: '100%' }}>
                 <Row
                   style={{
@@ -297,11 +320,56 @@ const PlayerBar = () => {
                             alignItems: 'flex-end',
                           }}
                         >
-                          <CustomTooltip enterable placement="top" text={playQueue?.current?.title}>
-                            <LinkButton tabIndex={0} onClick={() => history.push(`/nowplaying`)}>
-                              {playQueue?.current?.title || t('Unknown Title')}
-                            </LinkButton>
-                          </CustomTooltip>
+                          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                            <CustomTooltip enterable placement="top" text={playQueue?.current?.title}>
+                              <LinkButton tabIndex={0} onClick={() => history.push(`/nowplaying`)}>
+                                {playQueue?.current?.title || t('Unknown Title')}
+                              </LinkButton>
+                            </CustomTooltip>
+                            <CustomTooltip text={t('Favorite')}>
+                              <SmallIconDiv
+                                aria-label={t('Favorite')}
+                                aria-pressed={!!playQueue[currentEntryList][playQueue.currentIndex]?.starred}
+                                role="button"
+                                tabIndex={0}
+                                onClick={() =>
+                                  handleFavorite(playQueue[currentEntryList][playQueue.currentIndex], {
+                                    custom: async () => {
+                                      await queryClient.refetchQueries(['album'], {
+                                        active: true,
+                                      });
+                                      await queryClient.refetchQueries(['starred'], {
+                                        active: true,
+                                      });
+                                      await queryClient.refetchQueries(['playlist'], {
+                                        active: true,
+                                      });
+                                    },
+                                  })
+                                }
+                                onKeyDown={(e: any) => {
+                                  if (e.key === ' ') {
+                                    handleFavorite(playQueue[currentEntryList][playQueue.currentIndex].id, {
+                                      custom: async () => {
+                                        await queryClient.refetchQueries(['album'], {
+                                          active: true,
+                                        });
+                                        await queryClient.refetchQueries(['starred'], {
+                                          active: true,
+                                        });
+                                        await queryClient.refetchQueries(['playlist'], {
+                                          active: true,
+                                        });
+                                      },
+                                    });
+                                  }
+                                }}
+                              >
+                                {playQueue[currentEntryList][playQueue.currentIndex]?.starred ? (
+                                  <FavoriteIcon fontSize='inherit' style={{ color: accentColor }} /> ) : ( <FavoriteBorderIcon fontSize='inherit' /> )}
+                              </SmallIconDiv>
+                            </CustomTooltip>
+                          </div>
                           {lyrics && (
                             <CustomTooltip
                               enterable
@@ -401,131 +469,91 @@ const PlayerBar = () => {
             </PlayerColumn>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={12} style={{ textAlign: 'center', verticalAlign: 'middle' }}>
-            <PlayerColumn center height="45px">
+            <PlayerColumn center height="45px" onClick={handleClickBar}>
               {/* Stop Button */}
               <CustomTooltip text={t('Stop')}>
-                <PlayerControlIcon
-                  aria-label={t('Seek forward')}
+                <IconDiv
+                  aria-label={t('Stop')}
                   role="button"
                   tabIndex={0}
-                  icon="stop"
-                  size="lg"
-                  fixedWidth
-                  disabled={playQueue.entry.length === 0}
                   onClick={handleStop}
                   onKeyDown={(e: any) => {
                     if (e.key === ' ' || e.key === 'Enter') {
                       handleStop();
                     }
                   }}
-                />
+                >
+                  <StopCircleIcon fontSize='inherit' />
+                </IconDiv>
               </CustomTooltip>
               {/* Previous Song Button */}
               <CustomTooltip text={t('Previous Track')}>
-                <PlayerControlIcon
+                <IconDiv
                   aria-label={t('Previous Track')}
                   role="button"
                   tabIndex={0}
-                  icon="step-backward"
-                  size="lg"
-                  fixedWidth
-                  disabled={playQueue.entry.length === 0}
                   onClick={handlePrevTrack}
                   onKeyDown={(e: any) => {
                     if (e.key === ' ' || e.key === 'Enter') {
                       handlePrevTrack();
                     }
                   }}
-                />
-              </CustomTooltip>
-              {/* Seek Backward Button */}
-              <CustomTooltip text={t('Seek backward')}>
-                <PlayerControlIcon
-                  aria-label={t('Seek backward')}
-                  role="button"
-                  tabIndex={0}
-                  icon="backward"
-                  size="lg"
-                  fixedWidth
-                  disabled={playQueue.entry.length === 0}
-                  onClick={handleSeekBackward}
-                  onKeyDown={(e: any) => {
-                    if (e.key === ' ' || e.key === 'Enter') {
-                      handleSeekBackward();
-                    }
-                  }}
-                />
+                >
+                  <SkipPreviousIcon fontSize='inherit' />
+                </IconDiv>
               </CustomTooltip>
               {/* Play/Pause Button */}
               <CustomTooltip text={t('Play/Pause')}>
-                <PlayerControlIcon
+                <BigIconDiv
                   aria-label={t('Play')}
                   aria-pressed={player.status === 'PLAYING'}
                   role="button"
                   tabIndex={0}
-                  icon={player.status === 'PLAYING' ? 'pause-circle' : 'play-circle'}
-                  size="3x"
-                  disabled={playQueue.entry.length === 0}
                   onClick={handlePlayPause}
                   onKeyDown={(e: any) => {
                     if (e.key === ' ' || e.key === 'Enter') {
                       handlePlayPause();
                     }
                   }}
-                />
-              </CustomTooltip>
-
-              {/* Seek Forward Button */}
-              <CustomTooltip text={t('Seek forward')}>
-                <PlayerControlIcon
-                  aria-label={t('Seek forward')}
-                  role="button"
-                  tabIndex={0}
-                  icon="forward"
-                  size="lg"
-                  fixedWidth
-                  disabled={playQueue.entry.length === 0}
-                  onClick={handleSeekForward}
-                  onKeyDown={(e: any) => {
-                    if (e.key === ' ' || e.key === 'Enter') {
-                      handleSeekForward();
-                    }
-                  }}
-                />
+                >
+                  {player.status === 'PLAYING' ? (
+                    <PauseCircleIcon fontSize='inherit' /> ) : ( <PlayCircleIcon fontSize='inherit' /> )
+                  }
+                </BigIconDiv>
               </CustomTooltip>
               {/* Next Song Button */}
               <CustomTooltip text={t('Next Track')}>
-                <PlayerControlIcon
+                <IconDiv
                   aria-label={t('Next Track')}
                   role="button"
                   tabIndex={0}
-                  icon="step-forward"
-                  size="lg"
-                  fixedWidth
-                  disabled={playQueue.entry.length === 0}
                   onClick={handleNextTrack}
                   onKeyDown={(e: any) => {
                     if (e.key === ' ' || e.key === 'Enter') {
                       handleNextTrack();
                     }
                   }}
-                />
+                >
+                  <SkipNextIcon fontSize='inherit' />
+                </IconDiv>
               </CustomTooltip>
               <CustomTooltip text={t('Play Random')}>
-                <PlayerControlIcon
+                <IconDiv
                   aria-label={t('Play Random')}
                   role="button"
                   tabIndex={0}
-                  icon={isLoadingRandom ? 'spinner' : 'plus-square'}
-                  size="lg"
-                  fixedWidth
                   onClick={handlePlayRandom}
-                  disabled={isLoadingRandom}
-                  spin={isLoadingRandom}
-                />
+                  onKeyDown={(e: any) => {
+                    if (e.key === ' ' || e.key === 'Enter') {
+                      handlePlayRandom();
+                    }
+                  }}
+                >
+                  <LibraryAddIcon fontSize='inherit' />
+                </IconDiv>
               </CustomTooltip>
             </PlayerColumn>
-            <PlayerColumn center height="35px">
+            <PlayerColumn center height="35px" onClick={handleClickBar}>
               <FlexboxGrid
                 justify="center"
                 style={{
@@ -573,7 +601,7 @@ const PlayerBar = () => {
             </PlayerColumn>
           </FlexboxGrid.Item>
           <FlexboxGrid.Item colspan={6} style={{ textAlign: 'right', paddingRight: '10px' }}>
-            <PlayerColumn right height="80px" style={{ flexDirection: 'column' }}>
+            <PlayerColumn right height="80px" style={{ flexDirection: 'column' }} onClick={handleClickBar}>
               <div
                 style={{
                   height: '30px',
@@ -605,65 +633,12 @@ const PlayerBar = () => {
               </div>
               <div
                 style={{
-                  height: '25px',
+                  height: '60px',
                   display: 'flex',
                   alignSelf: 'flex-end',
                   alignItems: 'baseline',
                 }}
               >
-                {/* Favorite Button */}
-                <CustomTooltip text={t('Favorite')}>
-                  <PlayerControlIcon
-                    aria-label={t('Favorite')}
-                    aria-pressed={!!playQueue[currentEntryList][playQueue.currentIndex]?.starred}
-                    role="button"
-                    tabIndex={0}
-                    icon={
-                      playQueue[currentEntryList][playQueue.currentIndex]?.starred
-                        ? 'heart'
-                        : 'heart-o'
-                    }
-                    size="lg"
-                    fixedWidth
-                    active={
-                      playQueue[currentEntryList][playQueue.currentIndex]?.starred
-                        ? 'true'
-                        : 'false'
-                    }
-                    onClick={() =>
-                      handleFavorite(playQueue[currentEntryList][playQueue.currentIndex], {
-                        custom: async () => {
-                          await queryClient.refetchQueries(['album'], {
-                            active: true,
-                          });
-                          await queryClient.refetchQueries(['starred'], {
-                            active: true,
-                          });
-                          await queryClient.refetchQueries(['playlist'], {
-                            active: true,
-                          });
-                        },
-                      })
-                    }
-                    onKeyDown={(e: any) => {
-                      if (e.key === ' ') {
-                        handleFavorite(playQueue[currentEntryList][playQueue.currentIndex].id, {
-                          custom: async () => {
-                            await queryClient.refetchQueries(['album'], {
-                              active: true,
-                            });
-                            await queryClient.refetchQueries(['starred'], {
-                              active: true,
-                            });
-                            await queryClient.refetchQueries(['playlist'], {
-                              active: true,
-                            });
-                          },
-                        });
-                      }
-                    }}
-                  />
-                </CustomTooltip>
 
                 {/* Repeat Button */}
                 <CustomTooltip
@@ -675,7 +650,7 @@ const PlayerBar = () => {
                       : t('Repeat')
                   }
                 >
-                  <PlayerControlIcon
+                  <IconDiv
                     aria-label={
                       playQueue.repeat === 'all'
                         ? t('Repeat all')
@@ -688,59 +663,64 @@ const PlayerBar = () => {
                     }
                     role="button"
                     tabIndex={0}
-                    icon="refresh"
-                    size="lg"
-                    fixedWidth
                     onClick={handleRepeat}
                     onKeyDown={(e: any) => {
                       if (e.key === ' ') {
                         handleRepeat();
                       }
                     }}
-                    active={
-                      playQueue.repeat === 'all' || playQueue.repeat === 'one' ? 'true' : 'false'
-                    }
-                    flip={playQueue.repeat === 'one' ? 'horizontal' : undefined}
-                  />
+                  >
+                    {playQueue.repeat === 'all' ? (
+                      <RepeatOnIcon fontSize='inherit' style={{ color: accentColor }} />
+                    ) : playQueue.repeat === 'one' ? (
+                      <RepeatOneOnIcon fontSize='inherit' style={{ color: accentColor }} />
+                    ) : (
+                      <RepeatIcon fontSize='inherit' />
+                    )}
+                  </IconDiv>
                 </CustomTooltip>
                 {/* Shuffle Button */}
                 <CustomTooltip text={t('Shuffle')}>
-                  <PlayerControlIcon
+                  <IconDiv
                     aria-label={t('Shuffle')}
                     aria-pressed={playQueue.shuffle ? 'true' : 'false'}
                     role="button"
                     tabIndex={0}
-                    icon="random"
-                    size="lg"
-                    fixedWidth
                     onClick={handleShuffle}
                     onKeyDown={(e: any) => {
                       if (e.key === ' ') {
                         handleShuffle();
                       }
                     }}
-                    active={playQueue.shuffle ? 'true' : 'false'}
-                  />
+                  >
+                    {playQueue.shuffle ? (
+                      <ShuffleOnIcon fontSize='inherit' style={{ color: accentColor }} />
+                    ) : (
+                      <ShuffleIcon fontSize='inherit' />
+                    )}
+                  </IconDiv>
                 </CustomTooltip>
 
                 {/* Display Queue Button */}
                 <CustomTooltip text={t('Mini')}>
-                  <PlayerControlIcon
-                    aria-label="show play queue"
+                  <IconDiv
+                    aria-label={t('Mini')}
                     aria-pressed={playQueue.displayQueue ? 'true' : 'false'}
                     role="button"
                     tabIndex={0}
-                    icon="tasks"
-                    size="lg"
-                    fixedWidth
                     onClick={handleDisplayQueue}
                     onKeyDown={(e: any) => {
                       if (e.key === ' ') {
                         handleDisplayQueue();
                       }
                     }}
-                    active={playQueue.displayQueue ? 'true' : 'false'}
-                  />
+                  >
+                    {playQueue.displayQueue ? (
+                      <ViewListIcon fontSize='inherit' style={{ color: accentColor }} />
+                    ) : (
+                      <ViewListIcon fontSize='inherit' />
+                    )}
+                  </IconDiv>
                 </CustomTooltip>
               </div>
               <div
@@ -763,11 +743,18 @@ const PlayerBar = () => {
                   preventOverflow
                   speaker={<Popup>{muted ? t('Muted') : Math.floor(localVolume * 100)}</Popup>}
                 >
-                  <VolumeIcon
-                    icon={muted ? 'volume-off' : 'volume-down'}
+                  <SmallIconDiv
+                    aria-pressed={muted ? 'true' : 'false'}
+                    role="button"
+                    tabIndex={0}
                     onClick={() => setMuted(!muted)}
-                    size="lg"
-                  />
+                  >
+                    {muted ? (
+                      <VolumeOffIcon fontSize='inherit' />
+                    ) : (
+                      <VolumeUpIcon fontSize='inherit' />
+                    )}
+                  </SmallIconDiv>
                 </Whisper>
 
                 <Slider
