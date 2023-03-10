@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 
 interface SideNavItemProps {
-  onClick: () => void;
   children: React.ReactNode;
+  path?: string;
+  history?: any;
 }
 
 const Item = styled.div`
@@ -25,9 +26,31 @@ const Item = styled.div`
   }
 `;
 
-const SideNavItem = ({ onClick, children }: SideNavItemProps) => {
+const SideNavItem = ({ history, path, children }: SideNavItemProps) => {
+  const [currentPath, setCurrentPath] = useState(history.location.pathname);
+  const accentColor = window.localStorage.getItem('accentColor') || null;
+
+  useEffect(() => {
+    const unlisten = history.listen((location: any) => {
+      setCurrentPath(location.pathname);
+    });
+    return () => {
+      unlisten();
+    };
+  }, [history, currentPath]);
+
+  if (history.location.pathname === path && accentColor) {
+    return (
+      <Item
+        style={{color: accentColor}}
+        onClick={() => history.push(path)}
+      >
+        {children}
+      </Item>
+    );
+  }
   return (
-    <Item onClick={onClick}>
+    <Item onClick={() => history.push(path)}>
       {children}
     </Item>
   );

@@ -100,6 +100,14 @@ const Sidebar = ({
     setWidth(getSidebarWidth(throttledWidth));
   }, [dispatch, getSidebarWidth, throttledWidth]);
 
+  useEffect(() => {
+    setTimeout(() => {
+      const windowPath = history.location.pathname;
+      console.log(windowPath);
+    }, 1000)
+    return () => {};
+  }, [history.location.pathname]);
+
   return (
     <>
       <FixedSidebar
@@ -153,49 +161,49 @@ const Sidebar = ({
                 />
               )}
                 <div ref={mainNavRef} style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                  <SideNavItem onClick={() => history.push('/')}>
+                  <SideNavItem path='/' history={history}>
                     <HomeIcon fontSize='inherit' />
                     {t('Home')}
                   </SideNavItem>
-                  <SideNavItem onClick={() => history.push('/nowplaying')}>
+                  <SideNavItem path='/nowplaying' history={history}>
                     <HeadphonesIcon fontSize='inherit' />
                     {t('Now Playing')}
                   </SideNavItem>
-                  <SideNavItem onClick={() => history.push('/playlist')}>
+                  <SideNavItem path='/playlist' history={history}>
                     <QueueMusicIcon fontSize='inherit' />
                     {t('Playlists')}
                   </SideNavItem>
-                  <SideNavItem onClick={() => history.push('/starred')}>
+                  <SideNavItem path='/starred' history={history}>
                     <FavoriteIcon fontSize='inherit' />
                     {t('Favorites')}
                   </SideNavItem>
                   {config.serverType === Server.Jellyfin && (
-                    <SideNavItem onClick={() => history.push('/library/music')}>
+                    <SideNavItem path='/library/music' history={history}>
                       <LibraryMusicIcon fontSize='inherit' />
                       {t('Songs')}
                     </SideNavItem>
                   )}
-                  <SideNavItem onClick={() => history.push('/library/album')}>
+                  <SideNavItem path='/library/album' history={history}>
                     <AlbumIcon fontSize='inherit' />
                     {t('Albums')}
                   </SideNavItem>
-                  <SideNavItem onClick={() => history.push('/library/artist')}>
+                  <SideNavItem path='/library/artist' history={history}>
                     <AccountBoxIcon fontSize='inherit' />
                     {t('Artists')}
                   </SideNavItem>
-                  <SideNavItem onClick={() => history.push('/library/genre')}>
+                  <SideNavItem path='/library/genre' history={history}>
                     <PianoIcon fontSize='inherit' />
                     {t('Genres')}
                   </SideNavItem>
                   {useAppSelector((state) => state.config).serverType !== 'funkwhale' && (
                     <>
-                      <SideNavItem onClick={() => history.push('/library/folder')}>
+                      <SideNavItem path='/library/folder' history={history}>
                         <FolderCopyIcon fontSize='inherit' />
                         {t('Folders')}
                       </SideNavItem>
                     </>
                   )}
-                  <SideNavItem onClick={() => history.push('/config')}>
+                  <SideNavItem path='/config' history={history}>
                     <SettingsIcon fontSize='inherit' />
                     {t('Config')}
                   </SideNavItem>
