@@ -32,7 +32,7 @@ export const StyledButton = styled(Button)<{ width: number; $circle: boolean }>`
     props.$circle ? '100px' : props.theme.other?.button?.borderRadius} !important;
   background: ${(props) =>
     props.appearance === 'primary'
-      ? `${props.theme.colors.primary}`
+      ? `${(localStorage.getItem('accentColor') || '#2196F3')}`
       : props.appearance === 'subtle' || props.appearance === 'link'
       ? undefined
       : `${props.theme.colors.button.default.background}`} !important;
@@ -97,7 +97,7 @@ export const StyledInputGroupButton = styled(InputGroup.Button)<{ height?: numbe
   height: ${(props) => `${props.height}px`} !important;
   background: ${(props) =>
     props.appearance === 'primary'
-      ? `${props.theme.colors.primary}`
+      ? `${(localStorage.getItem('accentColor') || '#2196F3')}`
       : props.appearance === 'subtle' || props.appearance === 'link'
       ? undefined
       : `${props.theme.colors.button.default.background}`} !important;
@@ -149,7 +149,7 @@ export const StyledInputNumber = styled(InputNumber)<{ width: number }>`
   &:hover,
   &:active,
   &:focus {
-    border-color: ${(props) => props.theme.colors.primary} !important;
+    border-color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
   }
 
   width: ${(props) => `${props.width}px`};
@@ -175,7 +175,7 @@ export const StyledCheckbox = styled(Checkbox)`
           &:before {
             background-color: ${(props) =>
               props.checked || props.defaultChecked
-                ? `${props.theme.colors.primary} !important`
+                ? `${(localStorage.getItem('accentColor') || '#2196F3')} !important`
                 : undefined};
           }
           &:after {
@@ -188,7 +188,7 @@ export const StyledCheckbox = styled(Checkbox)`
 `;
 
 export const StyledToggle = styled(Toggle)`
-  background-color: ${(props) => (props.checked ? props.theme.colors.primary : '')} !important;
+  background-color: ${(props) => (props.checked ? (localStorage.getItem('accentColor') || '#2196F3') : '')} !important;
 
   .rs-btn-toggle-inner {
     color: ${(props) => (props.checked ? props.theme.colors.button.primary.color : '')} !important;
@@ -204,7 +204,7 @@ export const StyledRadio = styled(Radio)`
             background-color: transparent !important;
           }
           &:after {
-            background: ${(props) => `${props.theme.colors.primary} !important`};
+            background: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
           }
         }
       }
@@ -216,7 +216,7 @@ export const StyledIconButton = styled(IconButton)`
   border-radius: ${(props) => props.theme.other.button.borderRadius};
   background: ${(props) =>
     props.appearance === 'primary'
-      ? `${props.theme.colors.primary}`
+      ? `${(localStorage.getItem('accentColor') || '#2196F3')}`
       : props.appearance === 'subtle' || props.appearance === 'link'
       ? undefined
       : `${props.theme.colors.button.default.background}`} !important;
@@ -267,7 +267,7 @@ export const StyledNavItem = styled(Nav.Item)`
     text-align: center;
     border-radius: 0px !important;
     color: ${(props) =>
-      props.active ? props.theme.colors.primary : props.theme.colors.nav.color} !important;
+      props.active ? (localStorage.getItem('accentColor') || '#2196F3') : props.theme.colors.nav.color} !important;
 
     &:focus-visible {
       background: rgba(0, 0, 0, 0.3) !important;
@@ -278,7 +278,7 @@ export const StyledNavItem = styled(Nav.Item)`
 export const StyledIconToggle = styled(Icon)<{ active: string }>`
   cursor: pointer;
   color: ${(props) =>
-    props.active === 'true' ? props.theme.colors.primary : props.theme.colors.layout.page.color};
+    props.active === 'true' ? (localStorage.getItem('accentColor') || '#2196F3') : props.theme.colors.layout.page.color};
 
   &:focus-visible {
     outline: none;
@@ -287,7 +287,7 @@ export const StyledIconToggle = styled(Icon)<{ active: string }>`
 `;
 
 export const StyledRate = styled(Rate)`
-  color: ${(props) => props.theme.colors.primary};
+  color: ${(localStorage.getItem('accentColor') || '#2196F3')};
 `;
 
 export const StyledSlider = styled(Slider)`
@@ -360,11 +360,11 @@ export const StyledInputPickerContainer = styled.div`
     .rs-checkbox-checker {
       span {
         &:before {
-          border: ${(props) => `1px solid ${props.theme.colors.primary}`};
+          border: 1px solid ${(localStorage.getItem('accentColor') || '#2196F3')};
         }
         span {
           &:before {
-            background-color: ${(props) => `${props.theme.colors.primary} !important`};
+            background-color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
           }
           &:after {
             border: transparent !important;
@@ -387,7 +387,7 @@ export const StyledInputPicker = styled(InputPicker)<{ width?: number }>`
   &:hover,
   &:active,
   &:focus {
-    border-color: ${(props) => props.theme.colors.primary} !important;
+    border-color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
   }
 
   .rs-picker-toggle-value {
@@ -407,7 +407,7 @@ export const StyledInputPicker = styled(InputPicker)<{ width?: number }>`
 `;
 
 export const StyledIcon = styled(Icon)`
-  color: ${(props) => `${props.theme.colors.primary} !important`};
+  color: ${() => `${(localStorage.getItem('accentColor') || '#2196F3')} !important`};
 `;
 
 export const ContextMenuWindow = styled.div<{
@@ -498,14 +498,14 @@ export const SectionTitle = styled.a`
   &:hover {
     text-decoration: none;
     color: ${(props) =>
-      !props.onClick ? props.theme.colors.layout.page.color : props.theme.colors.primary};
+      !props.onClick ? props.theme.colors.layout.page.color : (localStorage.getItem('accentColor') || '#2196F3')};
   }
 
   &:active,
   &:focus {
     text-decoration: none;
     color: ${(props) =>
-      !props.onClick ? props.theme.colors.layout.page.color : props.theme.colors.primary};
+      !props.onClick ? props.theme.colors.layout.page.color : (localStorage.getItem('accentColor') || '#2196F3')};
   }
 `;
 
@@ -557,12 +557,12 @@ export const StyledTagPicker = styled(TagPicker)`
   &:hover,
   &:active,
   &:focus {
-    border-color: ${(props) => props.theme.colors.primary} !important;
+    border-color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
   }
 
   .rs-picker-input {
     &:hover {
-      border-color: ${(props) => props.theme.colors.primary};
+      border-color: ${(localStorage.getItem('accentColor') || '#2196F3')};
     }
   }
 
@@ -581,7 +581,7 @@ export const StyledCheckPicker = styled(CheckPicker)<{ width?: number }>`
   &:hover,
   &:active,
   &:focus {
-    border-color: ${(props) => props.theme.colors.primary} !important;
+    border-color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
   }
 
   a {
@@ -601,7 +601,7 @@ export const StyledCheckPicker = styled(CheckPicker)<{ width?: number }>`
   }
 
   .hover {
-    border: ${(props) => `1px solid ${props.theme.colors.primary} !important`};
+    border: 1px solid ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
   }
 
   a {
@@ -611,7 +611,7 @@ export const StyledCheckPicker = styled(CheckPicker)<{ width?: number }>`
   }
 
   .rs-picker-value-count {
-    background: ${(props) => props.theme.colors.primary};
+    background: ${(localStorage.getItem('accentColor') || '#2196F3')};
     color: ${(props) => props.theme.colors.button.primary.color} !important;
   }
 `;
@@ -664,7 +664,7 @@ export const StyledPagination = styled(Pagination)`
 
   .rs-pagination-btn-active {
     a {
-      color: ${(props) => props.theme.colors.primary} !important;
+      color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
     }
   }
 `;

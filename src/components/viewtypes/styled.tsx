@@ -112,6 +112,6 @@ export const StyledTableHeaderCell = styled(Table.HeaderCell)`
 
   .rs-table-cell-header-icon-sort-desc::after,
   .rs-table-cell-header-icon-sort-asc::after {
-    color: ${(props) => `${props.theme.colors.primary} !important`};
+    color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
   }
 `;

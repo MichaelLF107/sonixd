@@ -223,7 +223,7 @@ export const CoverArtWrapper = styled.div<{ $link?: boolean; size: number; card?
   overflow: ${(props) => (props.card ? 'visible' : 'hidden')};
 
   &:focus-visible {
-    outline: 2px ${(props) => props.theme.colors.primary} solid;
+    outline: 2px ${(localStorage.getItem('accentColor') || '#2196F3')} solid;
   }
 
   img {

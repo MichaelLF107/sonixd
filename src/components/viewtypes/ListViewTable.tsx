@@ -92,18 +92,18 @@ const StyledTable = styled(Table)<{ rowHeight: number; $isDragging: boolean }>`
   }
 
   .rs-table-row.dragover {
-    box-shadow: ${(props) => `inset 0px 5px 0px -3px ${props.theme.colors.primary}`};
+    box-shadow: inset 0px 5px 0px -3px ${(localStorage.getItem('accentColor') || '#2196F3')};
   }
 
   .rs-table-row.playing {
-    color: ${(props) => props.theme.colors.primary} !important;
+    color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
 
     span {
-      color: ${(props) => props.theme.colors.primary} !important;
+      color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
     }
 
     .rs-btn {
-      color: ${(props) => props.theme.colors.primary};
+      color: ${(localStorage.getItem('accentColor') || '#2196F3')};
     }
   }
 

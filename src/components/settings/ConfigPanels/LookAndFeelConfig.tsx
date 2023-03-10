@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 import { useQuery } from 'react-query';
 import { ipcRenderer, shell } from 'electron';
@@ -61,6 +61,7 @@ import { MUSIC_SORT_TYPES } from '../../library/MusicList';
 import Popup from '../../shared/Popup';
 import { apiController } from '../../../api/controller';
 import { settings } from '../../shared/setDefaultSettings';
+import { HexColorPicker } from 'react-colorful';
 
 export const ListViewConfigPanel = ({ bordered }: any) => {
   const { t } = useTranslation();
@@ -845,10 +846,31 @@ export const PaginationConfigPanel = ({ bordered }: any) => {
   );
 };
 
+export const AccentColorPanel = ({ bordered }: any) => {
+  const { t } = useTranslation();
+  const [color, setColor] = useState('')
+
+  useEffect(() => {
+    setColor(localStorage.getItem('accentColor') || '#ff0000')
+  }, [])
+
+  const handleColorChange = (e: string) => {
+    localStorage.setItem('accentColor', e);
+  };
+
+  return (
+    <ConfigPanel header={t('Accent Color')} bordered={bordered}>
+      <HexColorPicker color={color} onChange={handleColorChange} style={{marginBottom: 15}} />
+      <StyledButton onClick={() => window.location.reload()}>Apply Color</StyledButton>
+    </ConfigPanel>
+  );
+};
+
 const LookAndFeelConfig = ({ bordered }: any) => {
   return (
     <>
       <ThemeConfigPanel bordered={bordered} />
+      <AccentColorPanel bordered={bordered} />
       <ListViewConfigPanel bordered={bordered} />
       <GridViewConfigPanel bordered={bordered} />
       <PaginationConfigPanel bordered={bordered} />

@@ -54,7 +54,7 @@ export const CardPanel = styled(Panel)<Card>`
   } */
 
   &:hover {
-    border-color: ${(props) => props.theme.colors.primary} !important;
+    border-color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
     transform: ${(props) => props.theme.other.card.hover.transform};
     filter: ${(props) => props.theme.other.card.hover.filter};
     transition: ${(props) => props.theme.other.card.hover.transition};
@@ -79,12 +79,12 @@ export const ImgPanel = styled(Panel)<Card>`
   border-radius: ${(props) => props.theme.other.card.image.borderRadius} !important;
 
   &:focus-visible {
-    border-color: ${(props) => props.theme.colors.primary} !important;
+    border-color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
     outline: none !important;
   }
 
   &:hover {
-    border-color: ${(props) => props.theme.colors.primary} !important;
+    border-color: ${(localStorage.getItem('accentColor') || '#2196F3')} !important;
 
     .rs-btn {
       display: block;
@@ -130,7 +130,7 @@ export const CardTitleButton = styled(CardButton)`
     color: ${(props) =>
       !props.onClick
         ? props.theme.colors.layout.page.color
-        : props.theme.colors.primary} !important;
+        : (localStorage.getItem('accentColor') || '#2196F3')} !important;
   }
 
   &:focus-visible {
@@ -148,7 +148,7 @@ export const CardSubtitleButton = styled(CardButton)`
     color: ${(props) =>
       !props.onClick
         ? props.theme.colors.layout.page.color
-        : props.theme.colors.primary} !important;
+        : (localStorage.getItem('accentColor') || '#2196F3')} !important;
   }
 `;
 
@@ -181,7 +181,7 @@ export const Overlay = styled.div<Card>`
 
   .corner-triangle {
     position: absolute;
-    background-color: ${(props) => props.theme.colors.primary};
+    background-color: ${(localStorage.getItem('accentColor') || '#2196F3')};
     box-shadow: 0 0 10px 8px rgba(0, 0, 0, 0.8);
     height: 80px;
     left: -50px;
@@ -246,6 +246,6 @@ export const CardImgWrapper = styled.div<{ size: number; opacity?: number }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background: ${(props) => (props.opacity ? props.theme.colors.primary : 'unset')};
+  background: ${(props) => (props.opacity ? (localStorage.getItem('accentColor') || '#2196F3') : 'unset')};
   opacity: ${(props) => props.opacity};
 `;

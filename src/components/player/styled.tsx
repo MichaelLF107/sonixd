@@ -30,14 +30,14 @@ export const PlayerControlIcon = styled(Icon)`
   font-size: medium;
   color: ${(props) =>
     props.active === 'true'
-      ? props.theme.colors.primary
+      ? (localStorage.getItem('accentColor') || '#2196F3')
       : props.theme.colors.layout.playerBar.button.color};
   padding-left: 10px;
   padding-right: 10px;
   &:hover {
     color: ${(props) =>
       props.active === 'true'
-        ? props.theme.colors.primary
+        ? (localStorage.getItem('accentColor') || '#2196F3')
         : props.theme.colors.layout.playerBar.button.colorHover};
   }
 
@@ -79,7 +79,7 @@ export const LinkButton = styled.a<{ playing?: string; subtitle?: string }>`
   overflow: hidden;
   color: ${(props) =>
     props.playing === 'true'
-      ? props.theme.colors.primary
+      ? (localStorage.getItem('accentColor') || '#2196F3')
       : props.subtitle === 'true'
       ? props.theme.colors.layout.playerBar.colorSecondary
       : props.theme.colors.layout.playerBar.color} !important;
@@ -107,7 +107,7 @@ export const CustomSlider = styled(Slider)<{ isDragging?: boolean }>`
       display: block;
     }
     .rs-slider-progress-bar {
-      background-color: ${(props) => props.theme.colors.primary};
+      background-color: ${(localStorage.getItem('accentColor') || '#2196F3')};
     }
   }
 
@@ -117,18 +117,18 @@ export const CustomSlider = styled(Slider)<{ isDragging?: boolean }>`
 
   .rs-slider-progress-bar {
     background-color: ${(props) =>
-      props.$isDragging ? props.theme.colors.primary : props.theme.colors.slider.progressBar};
+      props.$isDragging ? (localStorage.getItem('accentColor') || '#2196F3') : props.theme.colors.slider.progressBar};
   }
 
   .rs-slider-handle::before {
     display: none;
-    border: ${(props) => `1px solid ${props.theme.colors.primary} !important`};
+    border: 1px solid ${(localStorage.getItem('accentColor') || '#2196F3')} !important};
   }
 
   &:focus-visible {
     outline: none;
     .rs-slider-progress-bar {
-      background-color: ${(props) => props.theme.colors.primary};
+      background-color: ${(localStorage.getItem('accentColor') || '#2196F3')};
     }
   }
 `;

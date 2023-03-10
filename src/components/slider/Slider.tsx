@@ -34,7 +34,7 @@ const StyledSlider = styled<any>(ReactSlider)`
       outline: none;
       height: 13px;
       width: 13px;
-      border: 1px ${(props) => props.theme.colors.primary} solid;
+      border: 1px ${(localStorage.getItem('accentColor') || '#2196F3')} solid;
       border-radius: 100%;
       text-align: center;
       background-color: #ffffff;
@@ -43,7 +43,7 @@ const StyledSlider = styled<any>(ReactSlider)`
   }
 
   .track-0 {
-    background: ${(props) => props.isDragging && props.theme.colors.primary};
+    background: ${(props) => props.isDragging && (localStorage.getItem('accentColor') || '#2196F3')};
   }
 
   .track {
@@ -52,7 +52,7 @@ const StyledSlider = styled<any>(ReactSlider)`
 
   &:hover {
     .track-0 {
-      background: ${(props) => (props.index === 1 ? '#3c3f43' : props.theme.colors.primary)};
+      background: ${(props) => (props.index === 1 ? '#3c3f43' : (localStorage.getItem('accentColor') || '#2196F3'))};
     }
   }
 `;
