@@ -46,7 +46,7 @@ const initialState: View = {
       parsedSettings.serverType === 'jellyfin' &&
       ['frequent', 'recent'].includes(String(parsedSettings.albumSortDefault))
         ? 'random'
-        : String(parsedSettings.albumSortDefault),
+        : String(localStorage.getItem('sortTypeAlbum') || parsedSettings.albumSortDefault),
     sort: {
       column: undefined,
       type: 'asc',
@@ -79,7 +79,7 @@ const initialState: View = {
     },
   },
   music: {
-    filter: String(parsedSettings.musicSortDefault) || 'random',
+    filter: localStorage.getItem('sortTypeSong') || 'random',
     sort: {
       column: undefined,
       type: 'asc',

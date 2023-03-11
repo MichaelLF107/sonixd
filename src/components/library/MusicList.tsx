@@ -225,6 +225,7 @@ const MusicList = () => {
                       dispatch(setFilter({ listType: Item.Music, data: value }));
                       dispatch(setPagination({ listType: Item.Music, data: { activePage: 1 } }));
                       localStorage.setItem('scroll_list_musicList', '0');
+                      localStorage.setItem('sortTypeSong', value);
                       setIsRefreshing(false);
                     }}
                   />

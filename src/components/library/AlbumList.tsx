@@ -254,6 +254,7 @@ const AlbumList = () => {
                     dispatch(setPagination({ listType: Item.Album, data: { activePage: 1 } }));
                     localStorage.setItem('scroll_grid_albumList', '0');
                     localStorage.setItem('scroll_list_albumList', '0');
+                    localStorage.setItem('sortTypeAlbum', value);
                     gridScroll(0);
                     listScroll(0);
                   }}

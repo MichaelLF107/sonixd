@@ -209,8 +209,7 @@ const OverlayButton = styled(IconButton)`
   &:hover {
     opacity: 1;
     background: ${(props) => props.theme.colors.card.overlayButton.backgroundHover};
-    background-color: ${(props) =>
-      props.theme.colors.card.overlayButton.backgroundHover} !important;
+    background-color: ${localStorage.getItem('accentColor') || '#1196EC'} !important;
     color: ${(props) => props.theme.colors.card.overlayButton.colorHover};
   }
 `;
