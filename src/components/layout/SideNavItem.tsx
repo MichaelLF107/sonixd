@@ -39,7 +39,7 @@ const SideNavItem = ({ history, path, children }: SideNavItemProps) => {
     };
   }, [history, currentPath]);
 
-  if (history.location.pathname === path && accentColor) {
+  if (currentPath === path) {
     return (
       <Item
         style={{color: accentColor}}
