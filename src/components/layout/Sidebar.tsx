@@ -100,14 +100,6 @@ const Sidebar = ({
     setWidth(getSidebarWidth(throttledWidth));
   }, [dispatch, getSidebarWidth, throttledWidth]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      const windowPath = history.location.pathname;
-      console.log(windowPath);
-    }, 1000)
-    return () => {};
-  }, [history.location.pathname]);
-
   return (
     <>
       <FixedSidebar
