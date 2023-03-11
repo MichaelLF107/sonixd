@@ -48,25 +48,13 @@ export const StyledButton = styled(Button)<{ width: number; $circle: boolean }>`
       : `${props.theme.colors.button.default.color}`} !important;
 
   filter: ${(props) => (props.disabled ? 'brightness(0.65)' : 'none')};
-  transition: 0s;
+  transition: all 0.2s ease-in-out;
   width: ${(props) => `${props.width}px`};
 
   &:hover {
-    color: ${(props) =>
-      props.appearance === 'primary'
-        ? `${props.theme.colors.button.primary.colorHover}`
-        : props.appearance !== 'subtle'
-        ? `${props.theme.colors?.button?.default.colorHover}`
-        : `${props.theme.colors.button.subtle.colorHover}`} !important;
+    color: #000 !important;
 
-    background: ${(props) =>
-      props.appearance === 'primary'
-        ? `${props.theme.colors.button.primary.backgroundHover}`
-        : props.appearance === 'subtle'
-        ? `${props.theme.colors.button.subtle.backgroundHover}`
-        : props.appearance === 'link'
-        ? undefined
-        : `${props.theme.colors.button.default.backgroundHover}`} !important;
+    background: #FFF !important;
   }
 
   &:focus {
