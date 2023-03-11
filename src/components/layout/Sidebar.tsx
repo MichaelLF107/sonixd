@@ -120,6 +120,7 @@ const Sidebar = ({
                     ''
                   ) || placeholderImg
                 }
+                style={{ borderRadius: '15px' }}
               />
               <StyledButton
                 size="xs"
