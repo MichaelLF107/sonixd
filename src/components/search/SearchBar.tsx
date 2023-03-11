@@ -24,6 +24,7 @@ import { Item, Song, Play } from '../../types';
 import Popup from '../shared/Popup';
 import { PlayAppendButton, PlayAppendNextButton, PlayButton } from '../shared/ToolbarButtons';
 import usePlayQueueHandler from '../../hooks/usePlayQueueHandler';
+import SearchIcon from '@mui/icons-material/Search';
 
 const SearchContainer = styled.div`
   height: 100%;
@@ -535,6 +536,7 @@ const SearchBar = () => {
                             disabled={!hasNextArtistPage}
                             loading={isFetchingNextArtistPage}
                           >
+                          <Icon icon="arrow-left-line" />
                             {t('Load more')}
                           </StyledButton>
                         </SectionTitle>
@@ -722,7 +724,9 @@ const SearchBar = () => {
           }}
           appearance="subtle"
         >
-          <Icon icon="search" />
+          <div style = {{fontSize: "1.2em"}}>
+          <SearchIcon fontSize = "inherit"/>
+        </div>
         </StyledButton>
       </span>
     </Whisper>

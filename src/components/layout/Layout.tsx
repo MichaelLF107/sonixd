@@ -26,6 +26,9 @@ import { setSidebar } from '../../redux/configSlice';
 import SearchBar from '../search/SearchBar';
 import Popup from '../shared/Popup';
 import { settings } from '../shared/setDefaultSettings';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import SettingsIcon from '@mui/icons-material/Settings';
 
 const Layout = ({ footer, children, disableSidebar, font }: any) => {
   const { t } = useTranslation();
@@ -153,7 +156,7 @@ const Layout = ({ footer, children, disableSidebar, font }: any) => {
                       size="sm"
                       onClick={() => history.goBack()}
                     >
-                      <Icon icon="arrow-left-line" />
+                    <ArrowBackIosIcon fontSize = "inherit" />
                     </StyledButton>
                     <StyledButton
                       aria-label="next"
@@ -161,7 +164,7 @@ const Layout = ({ footer, children, disableSidebar, font }: any) => {
                       size="sm"
                       onClick={() => history.goForward()}
                     >
-                      <Icon icon="arrow-right-line" />
+                      <ArrowForwardIosIcon fontSize = "inherit" />
                     </StyledButton>
                   </ButtonToolbar>
                 </FlexboxGrid.Item>
@@ -213,7 +216,7 @@ const Layout = ({ footer, children, disableSidebar, font }: any) => {
                       preventOverflow
                     >
                       <StyledButton aria-label="settings" appearance="subtle">
-                        <Icon icon="cog" />
+                        <SettingsIcon fontSize = "inherit" />
                       </StyledButton>
                     </Whisper>
                   </ButtonToolbar>
