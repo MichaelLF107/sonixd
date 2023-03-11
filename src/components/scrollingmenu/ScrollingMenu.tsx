@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
-import { ButtonGroup, ButtonToolbar, FlexboxGrid, Icon } from 'rsuite';
+import { ButtonGroup, ButtonToolbar, FlexboxGrid } from 'rsuite';
 import Card from '../card/Card';
 import { SectionTitleWrapper, SectionTitle, StyledButton } from '../shared/styled';
 import { useAppSelector } from '../../redux/hooks';
 import { smoothScroll } from '../../shared/utils';
 import { Item } from '../../types';
 import { settings } from '../shared/setDefaultSettings';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 
 const ScrollMenuContainer = styled.div<{ $noScrollbar?: boolean; maxWidth: string }>`
   overflow-x: auto;
@@ -74,7 +75,7 @@ const ScrollingMenu = ({
                       );
                     }}
                   >
-                    <Icon icon="arrow-left" />
+                    <PlayArrowIcon style={{transform: 'rotateY(180deg)', fontSize: '1.3rem'}} />
                   </StyledButton>
                   <StyledButton
                     aria-label="scroll right"
@@ -90,7 +91,7 @@ const ScrollingMenu = ({
                       );
                     }}
                   >
-                    <Icon icon="arrow-right" />
+                    <PlayArrowIcon style={{fontSize: '1.3rem'}} />
                   </StyledButton>
                 </ButtonGroup>
               </ButtonToolbar>
