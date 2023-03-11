@@ -724,7 +724,7 @@ const SearchBar = () => {
           }}
           appearance="subtle"
         >
-          <div style = {{fontSize: "1.2em"}}>
+          <div style = {{fontSize: "1.3rem"}}>
           <SearchIcon fontSize = "inherit"/>
         </div>
         </StyledButton>

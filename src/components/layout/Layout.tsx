@@ -156,7 +156,9 @@ const Layout = ({ footer, children, disableSidebar, font }: any) => {
                       size="sm"
                       onClick={() => history.goBack()}
                     >
+                        <div style={{fontSize: "1.3rem"}}>
                     <ArrowBackIosIcon fontSize = "inherit" />
+                        </div>
                     </StyledButton>
                     <StyledButton
                       aria-label="next"
@@ -164,7 +166,9 @@ const Layout = ({ footer, children, disableSidebar, font }: any) => {
                       size="sm"
                       onClick={() => history.goForward()}
                     >
+                        <div style={{fontSize: "1.3rem"}}>
                       <ArrowForwardIosIcon fontSize = "inherit" />
+                        </div>
                     </StyledButton>
                   </ButtonToolbar>
                 </FlexboxGrid.Item>
@@ -216,7 +220,9 @@ const Layout = ({ footer, children, disableSidebar, font }: any) => {
                       preventOverflow
                     >
                       <StyledButton aria-label="settings" appearance="subtle">
+                        <div style={{fontSize: "1.3rem"}}>
                         <SettingsIcon fontSize = "inherit" />
+                        </div>
                       </StyledButton>
                     </Whisper>
                   </ButtonToolbar>
