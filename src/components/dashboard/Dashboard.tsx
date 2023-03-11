@@ -137,34 +137,6 @@ const Dashboard = () => {
           />
 
           <ScrollingMenu
-            title={t('Recently Added')}
-            noScrollbar
-            data={newestAlbums.data}
-            cardTitle={{
-              prefix: '/library/album',
-              property: 'title',
-              urlProperty: 'albumId',
-            }}
-            cardSubtitle={{
-              prefix: '/library/artist',
-              property: 'albumArtist',
-              urlProperty: 'albumArtistId',
-            }}
-            cardSize={config.lookAndFeel.gridView.cardSize}
-            onClickTitle={() => {
-              dispatch(setFilter({ listType: Item.Album, data: 'newest' }));
-              dispatch(setPagination({ listType: Item.Album, data: { activePage: 1 } }));
-              setTimeout(() => {
-                history.push(`/library/album?sortType=newest`);
-              }, 50);
-            }}
-            type="album"
-            handleFavorite={(rowData: any) =>
-              handleFavorite(rowData, { queryKey: ['newestAlbums', musicFolder.id] })
-            }
-          />
-
-          <ScrollingMenu
             title={t('Random')}
             noScrollbar
             data={randomAlbums.data}
@@ -217,6 +189,34 @@ const Dashboard = () => {
             type="music"
             handleFavorite={(rowData: any) =>
               handleFavorite(rowData, { queryKey: ['frequentAlbums', musicFolder.id] })
+            }
+          />
+
+          <ScrollingMenu
+            title={t('Recently Added')}
+            noScrollbar
+            data={newestAlbums.data}
+            cardTitle={{
+              prefix: '/library/album',
+              property: 'title',
+              urlProperty: 'albumId',
+            }}
+            cardSubtitle={{
+              prefix: '/library/artist',
+              property: 'albumArtist',
+              urlProperty: 'albumArtistId',
+            }}
+            cardSize={config.lookAndFeel.gridView.cardSize}
+            onClickTitle={() => {
+              dispatch(setFilter({ listType: Item.Album, data: 'newest' }));
+              dispatch(setPagination({ listType: Item.Album, data: { activePage: 1 } }));
+              setTimeout(() => {
+                history.push(`/library/album?sortType=newest`);
+              }, 50);
+            }}
+            type="album"
+            handleFavorite={(rowData: any) =>
+              handleFavorite(rowData, { queryKey: ['newestAlbums', musicFolder.id] })
             }
           />
         </>
