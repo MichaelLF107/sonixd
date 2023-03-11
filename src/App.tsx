@@ -88,9 +88,11 @@ const App = () => {
   if (!localStorage.getItem('server') || !localStorage.getItem('serverBase64')) {
     return (
       <ThemeProvider theme={theme}>
-        <Layout disableSidebar footer={<MockFooter />} font={font}>
-          <Login />
-        </Layout>
+        <Router>
+          <Layout disableSidebar footer={<MockFooter />} font={font}>
+            <Login />
+          </Layout>
+        </Router>
       </ThemeProvider>
     );
   }
