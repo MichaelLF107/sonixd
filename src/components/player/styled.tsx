@@ -112,7 +112,7 @@ export const CoverArtContainer = styled.div<{ expand: boolean }>`
 export const LinkButton = styled.a<{ playing?: string; subtitle?: string }>`
   border-radius: 0px;
   background: transparent;
-  max-width: 100%;
+  max-width: 425px;
   padding: 0px;
   white-space: nowrap;
   text-overflow: ellipsis;
