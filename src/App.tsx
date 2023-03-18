@@ -124,7 +124,6 @@ const App = () => {
           </Switch>
         </Layout>
         <PageModal />
-        <ReleaseNotes />
         <NowPlayingMiniView />
         <GlobalContextMenu />
       </Router>
